@@ -1,0 +1,150 @@
+<html>
+    <head>
+        <style>
+            .letter {
+                display: inline-block;
+                margin-top: 80;
+                margin-right: 80;
+            }
+        </style>
+    </head>
+    <body>
+        <h1> Subliminal messages through fingers</h1>
+        <script>
+            var beat;
+            var index = 0;
+            var input_str;
+            var decoded = false;
+
+            function decode_base64 (s)
+            {
+                var e = {}, i, k, v = [], r = '', w = String.fromCharCode;
+                var n = [[65, 91], [97, 123], [48, 58], [43, 44], [47, 48]];
+
+                for (z in n)
+                {
+                    for (i = n[z][0]; i < n[z][1]; i++)
+                    {
+                        v.push(w(i));
+                    }
+                }
+                for (i = 0; i < 64; i++)
+                {
+                    e[v[i]] = i;
+                }
+
+                for (i = 0; i < s.length; i+=72)
+                {
+                    var b = 0, c, x, l = 0, o = s.substring(i, i+72);
+                    for (x = 0; x < o.length; x++)
+                    {
+                        c = e[o.charAt(x)];
+                        b = (b << 6) + c;
+                        l += 6;
+                        while (l >= 8)
+                        {
+                            r += w((b >>> (l -= 8)) % 256);
+                        }
+                     }
+                }
+                return r;
+            }
+
+
+            function do_stuff() {
+
+                if (!decoded) {
+                    input_str = document.getElementById("input").value;
+                    input_str = decode_base64(input_str);
+                    input_str = input_str.toLowerCase();
+                    input_str = input_str.replaceAll(" ", "#");
+                    decoded = true;
+                }
+
+                if (index >= input_str.length) {
+                    clearInterval(beat);
+                    decoded = false;
+                    index = 0;
+                    return
+                }
+                var c = input_str.charAt(index);
+                var div_elem = document.getElementById(c);
+                var prev_val = div_elem.innerHTML;
+                div_elem.innerHTML = "*";
+                setTimeout(function() {
+                    div_elem.innerHTML = prev_val;
+                }, 1000);
+
+                index += 1;
+            }
+
+            function reset() {
+                index = 0;
+                decoded = false;
+                clearInterval(beat);
+                return
+            }
+
+            function display_chars() {
+                beat = setInterval(do_stuff, 4000);
+            }
+        </script>
+
+        <div id="a" class="letter">.</div>
+        <div id="d" class="letter">.</div>
+        <div id="g" class="letter">.</div>
+        <div id="j" class="letter">.</div>
+        <div id="m" class="letter">.</div>
+        <div id="p" class="letter">.</div>
+        <div id="s" class="letter">.</div>
+        <div id="v" class="letter">.</div>
+        <br/>
+        <div id="b" class="letter">.</div>
+        <div id="e" class="letter">.</div>
+        <div id="h" class="letter">.</div>
+        <div id="k" class="letter">.</div>
+        <div id="n" class="letter">.</div>
+        <div id="q" class="letter">.</div>
+        <div id="t" class="letter">.</div>
+        <div id="w" class="letter">.</div>
+        <br/>
+        <div id="c" class="letter">.</div>
+        <div id="f" class="letter">.</div>
+        <div id="i" class="letter">.</div>
+        <div id="l" class="letter">.</div>
+        <div id="o" class="letter">.</div>
+        <div id="r" class="letter">.</div>
+        <div id="u" class="letter">.</div>
+        <div id="x" class="letter">.</div>
+        <br/>
+        <div id="y" class="letter">.</div>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <div id="z" class="letter">.</div>
+        <br/>
+
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <div id="#" class="letter">space</div>
+
+        <br/><br/><br/>
+        <input type = "password" onfocus="this.value=''" value="Enter message here" id="input"></input>
+        <button onclick="display_chars()" id="submit">Submit</button>
+        <button onclick="reset()" id="submit">Reset</button>
+    </body>
+
+</html>
